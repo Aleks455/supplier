@@ -10,4 +10,9 @@ use Illuminate\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    protected function inportFile()
+    {
+        return file_get_contents(__DIR__ . '/../../file/suppliers.csv');
+    }
 }
