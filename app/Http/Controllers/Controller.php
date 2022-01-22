@@ -11,8 +11,11 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    protected function inportFile()
+    protected $file_name = __DIR__ . '/../../file/suppliers.csv';
+
+    protected function data()
     {
-        return file_get_contents(__DIR__ . '/../../file/suppliers.csv');
+        
     }
+    
 }

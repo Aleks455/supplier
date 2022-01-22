@@ -14,8 +14,5 @@ use App\Http\Controllers\SupplierController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-Route::get('/supplier', [SupplierController::class, 'index']); 
+Route::get('/', [SupplierController::class, 'index']); 
