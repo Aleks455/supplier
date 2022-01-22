@@ -1,0 +1,31 @@
+Na osnovu priloženog .csv fajla napraviti bazu podataka i popuniti je podacima iz njega.
+Potrebno je obratiti pažnju na normalizaciju podataka prilikom modelovanja baze podataka.
+Nakon uvoza podataka u bazu kreirati REST API sa putanjama koje bi omogućile pristup informacijama
+
+Celine koje je neophodno uraditi:
+	1 - Kreirati MySQL bazu
+	2 - Sadržaj .csv fajla otvoriti i transformisati kako bi se baza napunila podacima iz aplikacije (potrebno je napraviti tu funkcionalnost u projektu)
+	3 - Čitanje iz baze podataka i prikazivanje rezultata u JSON formatu
+	4 - REST putanje koje trebaju da se naprave treba da imaju sledeće funkcionalnosti:
+		* - Prikazivanje svih Dobavljača
+		* - Izmena naziva Dobavljača
+		* - Brisanje Dobavljača
+		* - prikazivanje svih proizvoda
+		* - prikazivanje svih proizvoda koje poseduje određeni Dobavljač
+		* - izmena proizvoda
+		* - brisanje proizvoda
+		* - Kreiranje proizvoda i Dobavljača NIJE POTREBNO za potrebe ovog testa, jer ih već ubacujemo prilikom parsiranja .csv fajla
+	5 - Koristiti Git - Poželjno je da bude što više Commitova od strane kandidata
+	
+Test se može raditi u Čistom PHP-u, u Laravel/lumen ili nekom drugom framework-u u zavisnosti od toga koje okruženje Vam više odgovara.
+
+Nije potrebno praviti korisnički interfejs i upload dugme za .csv fajl.
+Pozivanje funkcionalnosti za procesuiranje CSV fajla treba da bude preko komandne linije/terminala ili preko CLI koji idu uz Framerwork (artisan, yii...)
+
+
+*************************************
+=========== Bonus Zadatak ===========
+*************************************
+Krerati novu putanju preko koje će se generisati novi CSV fajl za proizvode koji pripadaju određenom Dobavljaču 
+	Filename sastaviti po sledećem šablonu ime_dobavljača_godina_mesec_dan-sat_minut.csv | primer: hp_parts_2022_01_01-00_00.csv
+	u imenu dobavljača svaki karakter koji nije alfanumerički konvertovati u '_'
