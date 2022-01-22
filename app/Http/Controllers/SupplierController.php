@@ -7,8 +7,12 @@ use Illuminate\Http\Request;
 
 class SupplierController extends Controller
 {
-    
     public function index()
+    {
+        return view('home');
+    }
+
+    public function store()
     {
         $importData_arr = array();
         $i = 0;
@@ -74,12 +78,9 @@ class SupplierController extends Controller
                     Supplier::create([
                         'supplier_name' => $supp_name,
                         ]);
-                } 
-                                
-            }
-                    
+                }                    
+            }    
         }
-
     }
 
     public function find($name)
@@ -87,11 +88,27 @@ class SupplierController extends Controller
         return Supplier::where('supplier_name', $name)->first();
     }
 
+    public function showAll()
+    {
+        $suppliers = Supplier::all();
+
+        return view('suppliers', [
+            'suppliers' => $suppliers
+        ]); 
+
+    }
+
+    public function destroy($id)
+    {
+        $supplier = $this->findById($id);
+        $supplier->delete();
+    }
+
+    public function findById($id)
+    {
+       return Supplier::findOrFail($id);
+    }
+
     
-
-
-    
-
-
     
 }
