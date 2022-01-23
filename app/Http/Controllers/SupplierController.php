@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Supplier;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SupplierController extends Controller
 {
@@ -92,22 +93,35 @@ class SupplierController extends Controller
     {
         $suppliers = Supplier::all();
 
-        return view('suppliers', [
+        return view('suppliers.index', [
             'suppliers' => $suppliers
         ]); 
 
     }
 
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $supplier = $this->findById($id);
+        $supplier = Supplier::find($request->id);
+
         $supplier->delete();
     }
 
-    public function findById($id)
+    public function edit(Supplier $supplier)
     {
-       return Supplier::findOrFail($id);
+        return view('suppliers.edit', ['supplier' => $supplier]);
     }
+
+    public function update(Request $request)
+    {
+        $this->validate($request,[
+            'supplier_name' => 'required|max:225',
+        ]);
+        $data = Supplier::find($request->id);
+        $data->supplier_name = $request->supplier_name;
+        $data->save();
+
+    }
+
 
     
     

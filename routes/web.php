@@ -19,9 +19,15 @@ Route::get('/home', [SupplierController::class, 'index'])->name('home');
 
 Route::get('/store', [SupplierController::class, 'store']); 
 
-Route::post('/delete/{id}', [SupplierController::class, 'destroy'])->name('supplier.destroy'); 
+Route::post('/delete', [SupplierController::class, 'destroy'])->name('supplier.destroy'); 
 
-Route::get('/show-all', [SupplierController::class, 'showAll']); 
+Route::get('/suppliers', [SupplierController::class, 'showAll']);
+
+Route::get('/suppliers/edit/{supplier:id}', [SupplierController::class, 'edit'])->name('supplier.edit'); 
+
+Route::post('/suppliers/update', [SupplierController::class, 'update'])->name('supplier.update'); 
+
+
 
 
 
