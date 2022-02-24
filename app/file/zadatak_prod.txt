@@ -29,3 +29,50 @@ Pozivanje funkcionalnosti za procesuiranje CSV fajla treba da bude preko komandn
 Krerati novu putanju preko koje će se generisati novi CSV fajl za proizvode koji pripadaju određenom Dobavljaču 
 	Filename sastaviti po sledećem šablonu ime_dobavljača_godina_mesec_dan-sat_minut.csv | primer: hp_parts_2022_01_01-00_00.csv
 	u imenu dobavljača svaki karakter koji nije alfanumerički konvertovati u '_'
+
+
+
+DB 
+
+1.supplier_name,
+2.days_valid,
+3.priority,
+4.part_number,
+5.part_desc,
+6.quantity,
+7.price,
+8.condition,
+9.category
+
+1.products
+2.suppliers
+3.categories
+4.order_items
+5.order
+
+suppliers:
+-id
+-supplier_name (1)
+
+categories:
+-id
+-category (9)
+
+products:
+-id
+-part_number (4)
+-part_desc (5)
+-price (7)
+-condition (8)
+-FK: supplier
+-FK: category
+
+order:???
+-id
+-days_valid(2)
+-priority(3)
+
+order_items:
+-order_id???
+-product_id
+-quantity (6)

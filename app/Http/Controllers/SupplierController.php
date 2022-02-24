@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+// use Illuminate\Support\Facades\DB;
 
 class SupplierController extends Controller
 {
@@ -15,6 +16,7 @@ class SupplierController extends Controller
 
     public function store()
     {
+
         $importData_arr = array();
         $i = 0;
         // $row = 1;
@@ -42,9 +44,14 @@ class SupplierController extends Controller
             // print_r($importData_arr[1]); // array of arrays. each array is one row-array.
 
             $j = 0;
+            $supplier_array = [];
+            $cat_array = [];
             foreach ($importData_arr as $importData_row) {
                 
-                $supplier_name [] = $importData_row[0]; //Get supplier name
+                if( array_search($importData_row[0], $supplier_array, true) === false && $importData_row[0] > 0) {
+                    array_push($supplier_array, $importData_row[0]);
+                }
+
                 $days_valid = $importData_row[1]; 
                 $prority = $importData_row[2]; 
                 $part_number = $importData_row[3]; 
@@ -52,51 +59,56 @@ class SupplierController extends Controller
                 $quantity = $importData_row[5]; 
                 $price = $importData_row[6]; 
                 $condition = $importData_row[7]; 
-                $category = $importData_row[8]; 
-                // echo $supplier_name;
-                // echo "<br>";
+            
+                if(array_search($importData_row[8], $cat_array, true) === false && $importData_row[8] > 0) {
+                    array_push($cat_array, $importData_row[8]);
+                }
 
                 $j++;
-                
-               
-                // supplier_name,days_valid,priority,part_number,part_desc,quantity,price,condition,category
-
             }
+            // print_r($supplier_array);
+            // die();
 
-            $supplier_name_arr = array_unique($supplier_name);
-
-            $supp_names = [];
-            foreach ($supplier_name_arr as $supplier_name) {
-                if (strlen($supplier_name) > 0 ){
-                    array_push($supp_names, $supplier_name);
-                }
-            }
-
-            foreach ($supp_names as $supp_name) {
+            foreach ($supplier_array as $supp_name) {
 
                 // If the name does not exist, insert it in a table 
-                if ($this->find($supp_name) == NULL){
+                if ($this->findSupplier($supp_name) == NULL){
                     Supplier::create([
                         'supplier_name' => $supp_name,
-                        ]);
+                    ]);
                 }                    
             }    
         }
+
+        foreach ($cat_array as $category) {
+            if ($this->findCategory($category) == NULL){
+                Category::create([
+                    'category' => $category,
+                ]);
+            }   
+        }
+
+        return redirect()->route('suppliers.all');
+
     }
 
-    public function find($name)
+    public function findCategory($name)
+    {
+        return Category::where('category', $name)->first();
+    }
+
+    public function findSupplier($name)
     {
         return Supplier::where('supplier_name', $name)->first();
     }
 
     public function showAll()
     {
-        $suppliers = Supplier::all();
+        $suppliers = Supplier::all()->sortBy('supplier_name');
 
         return view('suppliers.index', [
             'suppliers' => $suppliers
         ]); 
-
     }
 
     public function destroy(Request $request)
@@ -104,6 +116,8 @@ class SupplierController extends Controller
         $supplier = Supplier::find($request->id);
 
         $supplier->delete();
+
+        return redirect()->route('suppliers.all');
     }
 
     public function edit(Supplier $supplier)
@@ -119,6 +133,8 @@ class SupplierController extends Controller
         $data = Supplier::find($request->id);
         $data->supplier_name = $request->supplier_name;
         $data->save();
+
+        return redirect()->route('suppliers.all');
 
     }
 

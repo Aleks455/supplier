@@ -1,4 +1,7 @@
 <x-layout>
+    <button><a style="text-decoration: none" href="{{ route('suppliers.store') }}">Store</a></button>
+    <br>
+    <br>
     @if ($suppliers->count())
     <table>
         @foreach ($suppliers as $supplier) 
@@ -25,4 +28,5 @@
         @endforeach
     </table>
     @endif
+
 </x-layout>

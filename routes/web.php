@@ -15,17 +15,17 @@ use App\Http\Controllers\SupplierController;
 */
 
 
-Route::get('/home', [SupplierController::class, 'index'])->name('home'); 
+Route::get('/', [SupplierController::class, 'index'])->name('home'); 
 
-Route::get('/store', [SupplierController::class, 'store']); 
+Route::get('/store', [SupplierController::class, 'store'])->name('suppliers.store'); 
 
-Route::post('/delete', [SupplierController::class, 'destroy'])->name('supplier.destroy'); 
+Route::post('/supplier/delete', [SupplierController::class, 'destroy'])->name('supplier.destroy'); 
 
-Route::get('/suppliers', [SupplierController::class, 'showAll']);
+Route::get('/suppliers', [SupplierController::class, 'showAll'])->name('suppliers.all');
 
-Route::get('/suppliers/edit/{supplier:id}', [SupplierController::class, 'edit'])->name('supplier.edit'); 
+Route::get('/supplier/{supplier:id}', [SupplierController::class, 'edit'])->name('supplier.edit'); 
 
-Route::post('/suppliers/update', [SupplierController::class, 'update'])->name('supplier.update'); 
+Route::post('/supplier/update', [SupplierController::class, 'update'])->name('supplier.update'); 
 
 
 
